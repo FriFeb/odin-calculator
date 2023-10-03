@@ -3,6 +3,9 @@ const digits = document.querySelector(".digits");
 const display = document.querySelector(".display");
 const equal = document.querySelector(".equal");
 
+let isPrintedResult = false;
+let isUsedOperator = false;
+
 function add(a, b) {
   return a + b;
 }
@@ -32,39 +35,44 @@ function operate(sign, a, b) {
   }
 }
 
-function destructureDisplayString(n) {
-  const displayString = display.innerText.split(" ");
-
-  return displayString.slice(0, n);
-}
-
 function showDigit(e) {
   if (e.target.tagName !== "BUTTON") return;
 
+  if (isPrintedResult && !isUsedOperator) {
+    display.innerHTML = "";
+  }
+
   display.innerHTML += e.target.innerHTML;
+
+  isPrintedResult = false;
 }
 
 function showOperator(e) {
   if (e.target.tagName !== "BUTTON") return;
 
-  const displayString = destructureDisplayString(1);
-  const firstNumber = displayString[0];
+  const destructuredDisplayString = display.innerText.split(" ");
+
+  const [firstNumber] = destructuredDisplayString;
 
   display.innerHTML = `${firstNumber} ${e.target.innerHTML} `;
+
+  isUsedOperator = true;
 }
 
 function showResult(e) {
   if (e.target.tagName !== "BUTTON") return;
-  
-  const displayString = destructureDisplayString(3);
 
-  const firstNumber = displayString[0];
-  const operator = displayString[1];
-  const secondNumber = displayString[2];
+  const destructuredDisplayString = display.innerText.split(" ");
+
+  const [firstNumber, , secondNumber] = destructuredDisplayString;
+  const operator = destructuredDisplayString[1];
 
   const result = operate(operator, +firstNumber, +secondNumber);
 
-  display.innerHTML = result;
+  display.innerText = result.toFixed(3);
+
+  isPrintedResult = true;
+  isUsedOperator = false;
 }
 
 digits.addEventListener("click", showDigit);
