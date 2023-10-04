@@ -1,7 +1,8 @@
-const operators = document.querySelector(".operators");
-const digits = document.querySelector(".digits");
-const display = document.querySelector(".display");
-const equal = document.querySelector(".equal");
+const operatorBtns = document.querySelector(".operators");
+const digitBtns = document.querySelector(".digits");
+const displayText = document.querySelector(".display-text");
+const equalBtn = document.querySelector(".equal");
+const clearBtn = document.querySelector(".clear");
 
 let isPrintedResult = false;
 let isUsedOperator = false;
@@ -39,10 +40,10 @@ function showDigit(e) {
   if (e.target.tagName !== "BUTTON") return;
 
   if (isPrintedResult && !isUsedOperator) {
-    display.innerHTML = "";
+    displayText.innerHTML = "";
   }
 
-  display.innerHTML += e.target.innerHTML;
+  displayText.innerHTML += e.target.innerHTML;
 
   isPrintedResult = false;
 }
@@ -50,11 +51,13 @@ function showDigit(e) {
 function showOperator(e) {
   if (e.target.tagName !== "BUTTON") return;
 
-  const destructuredDisplayString = display.innerText.split(" ");
+  const destructuredDisplayString = displayText.innerText.split(" ");
 
   const [firstNumber] = destructuredDisplayString;
 
-  display.innerHTML = `${firstNumber} ${e.target.innerHTML} `;
+  if(firstNumber instanceof !Number) return;
+
+  displayText.innerHTML = `${firstNumber} ${e.target.innerHTML} `;
 
   isUsedOperator = true;
 }
@@ -62,19 +65,29 @@ function showOperator(e) {
 function showResult(e) {
   if (e.target.tagName !== "BUTTON") return;
 
-  const destructuredDisplayString = display.innerText.split(" ");
+  isPrintedResult = true;
+  isUsedOperator = false;
+
+  const destructuredDisplayString = displayText.innerText.split(" ");
 
   const [firstNumber, , secondNumber] = destructuredDisplayString;
   const operator = destructuredDisplayString[1];
 
+  if (!firstNumber || !secondNumber) {
+    displayText.innerHTML = "Error!";
+    return;
+  }
+
   const result = operate(operator, +firstNumber, +secondNumber);
 
-  display.innerText = result.toFixed(3);
-
-  isPrintedResult = true;
-  isUsedOperator = false;
+  displayText.innerText = result.toFixed(3);
 }
 
-digits.addEventListener("click", showDigit);
-operators.addEventListener("click", showOperator);
-equal.addEventListener("click", showResult);
+function clearDisplay() {
+  displayText.innerHTML = "";
+}
+
+digitBtns.addEventListener("click", showDigit);
+operatorBtns.addEventListener("click", showOperator);
+equalBtn.addEventListener("click", showResult);
+clearBtn.addEventListener("click", clearDisplay);
