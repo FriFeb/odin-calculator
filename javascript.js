@@ -55,7 +55,7 @@ function showOperator(e) {
 
   const [firstNumber] = destructuredDisplayString;
 
-  if(firstNumber instanceof !Number) return;
+  if(isNaN(firstNumber)) return;
 
   displayText.innerHTML = `${firstNumber} ${e.target.innerHTML} `;
 
