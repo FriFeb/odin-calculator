@@ -48,17 +48,39 @@ function showDigit(e) {
   isPrintedResult = false;
 }
 
+/*
+  I can check if display shows 
+    one number
+      then I can add sign operator
+      if sign added I can change sign without rewriting number
+    two numbers 
+      then first two numbers operates with operate() func
+      the result is shown and chosen operator after it
+*/
+
+function calculateDisplayNumbers() {
+  const destructuredDisplayString = displayText.innerText.split(" ");
+  if (!destructuredDisplayString[0].length) return 0;
+  else if (destructuredDisplayString.length === 3) return 2;
+  else return 1;
+}
+
 function showOperator(e) {
   if (e.target.tagName !== "BUTTON") return;
 
-  const destructuredDisplayString = displayText.innerText.split(" ");
+  const numberCount = calculateDisplayNumbers();
 
+  if (!numberCount) return;
+  else if (numberCount === 2) {
+    showResult(e);
+  }
+
+  const destructuredDisplayString = displayText.innerText.split(" ");
   const [firstNumber] = destructuredDisplayString;
 
-  if(isNaN(firstNumber)) return;
-
+  if (isNaN(firstNumber)) return;
+  
   displayText.innerHTML = `${firstNumber} ${e.target.innerHTML} `;
-
   isUsedOperator = true;
 }
 
@@ -73,14 +95,18 @@ function showResult(e) {
   const [firstNumber, , secondNumber] = destructuredDisplayString;
   const operator = destructuredDisplayString[1];
 
-  if (!firstNumber || !secondNumber) {
+  if (
+    !firstNumber ||
+    !secondNumber ||
+    (operator === "/" && +secondNumber === 0)
+  ) {
     displayText.innerHTML = "Error!";
     return;
   }
 
   const result = operate(operator, +firstNumber, +secondNumber);
 
-  displayText.innerText = result.toFixed(3);
+  displayText.innerText = Math.round(result * 1000) / 1000;
 }
 
 function clearDisplay() {
