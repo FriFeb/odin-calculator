@@ -89,8 +89,6 @@ function operate(operator, a, b) {
     - isEmptyDisplay = true
     - isResultDisplay = false
     - isErrorDisplay = false
-    - isTwoOperandsDisplay = false
-
     
   And finally functions:
 
@@ -107,7 +105,7 @@ function operate(operator, a, b) {
           TRUE
             return
 
-        IF isTwoOperandsDisplay is true
+        IF isTwoOperandsDisplay() is true
           TRUE
             call showResult()
         
@@ -119,7 +117,7 @@ function operate(operator, a, b) {
           TRUE
             return
 
-        IF isTwoOperandsDisplay is false
+        IF isTwoOperandsDisplay() is false
           TRUE
             call showError()
             return
@@ -132,20 +130,26 @@ function operate(operator, a, b) {
         
         show result in the display string
         isResultDisplay = true
-        isTwoOperandsDisplay = false
 
     * clearDisplay()
         reset display string 
         isEmptyDisplay = true
         isResultDisplay = false
         isErrorDisplay = false
-        isTwoOperandsDisplay = false
 
     * showError()
         call clearDisplay()
         show error message in the display string
         isEmptyDisplay = false
         isErrorDisplay = true
+
+    * isTwoOperandsDisplay()
+        take the display string
+        split it with spaces
+        IF have operand1 and operand2
+          TRUE
+            return true
+        return false
         
     Yeah, that's pretty much it, 
     hope it will cover all needed situations
