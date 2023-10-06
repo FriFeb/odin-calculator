@@ -4,8 +4,9 @@ const displayText = document.querySelector(".display-text");
 const equalBtn = document.querySelector(".equal");
 const clearBtn = document.querySelector(".clear");
 
-let isPrintedResult = false;
-let isUsedOperator = false;
+let isEmptyDisplay = true;
+let isResultDisplay = false;
+let isErrorDisplay = false;
 
 function add(a, b) {
   return a + b;
@@ -30,7 +31,7 @@ function operate(operator, a, b) {
     case "*":
       return multiply(a, b);
     case "/":
-      if (b === 0) return "error"
+      if (b === 0) return "error";
       return divide(a, b);
     default:
       return "error";
@@ -97,6 +98,10 @@ function operate(operator, a, b) {
           TRUE
             call clearDisplay()
 
+        IF isTooBigCurrentOperand() is true
+          TRUE 
+            alert("Too big number")
+
         add one digit to the display string
         isEmptyDisplay = false
 
@@ -143,13 +148,36 @@ function operate(operator, a, b) {
         isEmptyDisplay = false
         isErrorDisplay = true
 
+    * destructureDisplayString() 
+        grab the display string
+        split it with spaces into array
+        return operand1 and operand2
+
     * isTwoOperandsDisplay()
-        take the display string
-        split it with spaces
-        IF have operand1 and operand2
+        operand1 and operand2 = destructureDisplayString() 
+
+        IF operand1.length is true && operand2.length is true
           TRUE
             return true
         return false
+
+    * isTooBigCurrentOperand () 
+        operand1 and operand2 = destructureDisplayString() 
+
+        IF operand2 
+          TRUE
+            IF isTooBigOperand (operand2) === true
+              TRUE 
+                return true
+
+        IF isTooBigOperand (operand1) === true
+          TRUE 
+            return true
+
+    * isTooBigOperand (operand)
+        IF operand.length > 10^6
+          return true
+          
         
     Yeah, that's pretty much it, 
     hope it will cover all needed situations
@@ -218,11 +246,22 @@ function operate(operator, a, b) {
 //   displayText.innerText = Math.round(result * 1000) / 1000;
 // }
 
+function showDigit(e) {
+  if (e.target.tagName !== "BUTTON") return;
+
+  if (isResultDisplay === true || isErrorDisplay === true) {
+    clearDisplay();
+  }
+
+  displayText.innerHTML += e.target.innerHTML;
+  if (isEmptyDisplay) isEmptyDisplay = false;
+}
+
 function clearDisplay() {
   displayText.innerHTML = "";
 }
 
 digitBtns.addEventListener("click", showDigit);
-operatorBtns.addEventListener("click", showOperator);
-equalBtn.addEventListener("click", showResult);
+// operatorBtns.addEventListener("click", showOperator);
+// equalBtn.addEventListener("click", showResult);
 clearBtn.addEventListener("click", clearDisplay);
