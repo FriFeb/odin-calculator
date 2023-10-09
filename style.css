@@ -9,7 +9,20 @@ ul {
 }
 
 button {
-  border: 1px solid;
+  border: 2px solid;
+  border-bottom-color: hsl(0, 0%, 30%);
+  border-right-color: hsl(0, 0%, 30%);
+  border-radius: 10px;
+}
+
+button:active {
+  background-color: white;
+  transform: translate(1px, 1px);
+}
+
+button.active {
+  background-color: white;
+  transform: translate(1px, 1px);
 }
 
 .container {
@@ -43,6 +56,7 @@ button {
 .buttons {
   display: flex;
   flex-direction: column;
+  background-color: black;
 }
 
 .operators {
@@ -71,12 +85,17 @@ button {
 }
 
 .digits > * {
-  flex: 33%;
+  flex: 30%;
 }
 
 .digit {
   padding: 1rem;
   width: 100%;
+}
+
+.digits > :nth-last-child(2) {
+  flex: 0;
+  flex-basis: calc(100% / 3);
 }
 
 .bottom-side-buttons {
@@ -86,6 +105,10 @@ button {
 }
 
 .bottom-side-buttons > * {
-  flex: 50%;
+  flex: auto;
   background-color: hsl(200, 100%, 65%);
+}
+
+.equal {
+  flex: 0 1 50%;
 }
