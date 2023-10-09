@@ -4,6 +4,11 @@ const digitBtns = document.querySelector(".digits");
 const equalBtn = document.querySelector(".equal");
 const clearBtn = document.querySelector(".clear");
 
+const addBtn = document.querySelector(".add");
+const minusBtn = document.querySelector(".minus");
+const divideBtn = document.querySelector(".divide");
+const multiplyBtn = document.querySelector(".multiply");
+
 let isEmptyDisplay = true;
 let isResultDisplay = false;
 let isErrorDisplay = false;
@@ -144,8 +149,8 @@ document.addEventListener("keydown", (e) => {
 
   switch (e.code) {
     case `Digit${digit}`:
-      if (e.shiftKey && +digit[0] === 8) {
-        document.querySelector(".multiply").click();
+      if (e.shiftKey && digit[0] === '8') {
+        multiplyBtn.click();
         break;
       }
     case `Numpad${digit}`:
@@ -153,41 +158,38 @@ document.addEventListener("keydown", (e) => {
       break;
 
     case "NumpadAdd":
-      document.querySelector(".add").click();
+      addBtn.click();
       break;
     case "Equal":
       if (e.shiftKey) {
-        document.querySelector(".add").click();
+        addBtn.click();
       } else {
-        document.querySelector(".equal").click();
+        equalBtn.click();
       }
       break;
 
     case "NumpadSubtract":
     case "Minus":
-      document.querySelector(".minus").click();
+      minusBtn.click();
       break;
 
     case "NumpadMultiply":
-      document.querySelector(".multiply").click();
-      break;
-    case "Digit8":
-      if (e.shiftKey) document.querySelector(".multiply").click();
+      multiplyBtn.click();
       break;
 
     case "NumpadDivide":
     case "Slash":
-      document.querySelector(".divide").click();
+      divideBtn.click();
       break;
 
     case "Enter":
     case "NumpadEnter":
-      document.querySelector(".equal").click();
+      equalBtn.click();
       break;
 
     case "NumpadDecimal":
     case "Delete":
-      document.querySelector(".clear").click();
+      clearBtn.click();
       break;
 
     case "Backspace":
@@ -196,3 +198,6 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+
+// floating point numbers
+// backspace btn
