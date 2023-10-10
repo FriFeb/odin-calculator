@@ -144,7 +144,14 @@ function clearDisplay() {
 
 function eraseSymbol() {
   if (isEmptyDisplay || isErrorDisplay) return;
-  displayText.innerHTML = displayText.innerHTML.slice(0, -1);
+
+  // if space left (around operator)
+  if (displayText.innerHTML.at(-1) === " ") {
+    displayText.innerHTML = displayText.innerHTML.slice(0, -3);
+  } else {
+    displayText.innerHTML = displayText.innerHTML.slice(0, -1);
+  }
+
   isResultDisplay = false;
 }
 
