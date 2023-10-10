@@ -4,6 +4,7 @@ const digitBtns = document.querySelector(".digits");
 const dotBtn = document.querySelector(".dot");
 const clearBtn = document.querySelector(".clear");
 const eraseBtn = document.querySelector(".erase");
+const signBtn = document.querySelector(".sign");
 const equalBtn = document.querySelector(".equal");
 
 const addBtn = document.querySelector(".add");
@@ -43,11 +44,11 @@ function operate(a, b, operator) {
   }
 }
 
-function destructureDisplayString(isDotCheck = false) {
+function destructureDisplayString(returnDisplayString = false) {
   const displayStr = displayText.innerText;
   const expression = displayStr.split(" ");
 
-  if (isDotCheck) return [expression[0], expression[2]];
+  if (returnDisplayString) return expression;
 
   return [+expression[0], +expression[2], expression[1]];
 }
@@ -77,7 +78,7 @@ function showDigit(e) {
 function showDot() {
   if (isEmptyDisplay || isErrorDisplay) return;
 
-  let [operand1, operand2] = destructureDisplayString(true);
+  let [operand1, , operand2] = destructureDisplayString(true);
 
   // if operand2 exist
   if (!isNaN(operand2)) {
@@ -143,10 +144,38 @@ function eraseSymbol() {
   isResultDisplay = false;
 }
 
+function changeNumberSign() {
+  if (isEmptyDisplay || isErrorDisplay) return;
+
+  const destructuredDisplayString = destructureDisplayString(true);
+  let [operand1, , operand2] = destructuredDisplayString;
+
+  // if operand2 exist
+  if (!isNaN(operand2)) {
+    operand2 = changeSign(operand2);
+    destructuredDisplayString[2] = operand2;
+  } else {
+    operand1 = changeSign(operand1);
+    destructuredDisplayString[0] = operand1;
+    destructuredDisplayString[2] = "";
+  }
+
+  displayText.innerHTML = destructuredDisplayString.join(" ");
+}
+
+function changeSign(operand) {
+  if (operand.includes("-")) {
+    return operand.slice(1);
+  } else {
+    return "-" + operand;
+  }
+}
+
 digitBtns.addEventListener("click", showDigit);
 operatorBtns.addEventListener("click", showOperator);
 clearBtn.addEventListener("click", clearDisplay);
 eraseBtn.addEventListener("click", eraseSymbol);
+signBtn.addEventListener("click", changeNumberSign);
 equalBtn.addEventListener("click", showResult);
 
 document.addEventListener("keydown", (e) => {

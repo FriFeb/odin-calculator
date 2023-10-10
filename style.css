@@ -114,7 +114,3 @@ button.active {
   flex: auto;
   background-color: hsl(200, 100%, 65%);
 }
-
-.equal {
-  flex: 0 1 50%;
-}
