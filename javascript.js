@@ -115,6 +115,7 @@ function showDot() {
   if (isNaN(operand2) && operator) return;
 
   displayText.innerHTML += ".";
+  isResultDisplay = false;
 }
 
 function hasDot(operand) {
@@ -281,6 +282,7 @@ document.addEventListener("keydown", (e) => {
 
     case "Enter":
     case "NumpadEnter":
+      e.preventDefault();
       equalBtn.click();
       equalBtn.classList.add("active");
       setTimeout(() => equalBtn.classList.remove("active"), 100);
