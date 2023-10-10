@@ -78,7 +78,7 @@ function showDigit(e) {
 function showDot() {
   if (isEmptyDisplay || isErrorDisplay) return;
 
-  let [operand1, , operand2] = destructureDisplayString(true);
+  let [operand1, operator, operand2] = destructureDisplayString(true);
 
   // if operand2 exist
   if (!isNaN(operand2)) {
@@ -87,6 +87,8 @@ function showDot() {
     if (hasDot(operand1)) return;
   }
 
+  if (isNaN(operand2) && operator) return;
+  
   displayText.innerHTML += ".";
 }
 
