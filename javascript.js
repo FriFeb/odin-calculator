@@ -71,8 +71,33 @@ function showDigit(e) {
     clearDisplay();
   }
 
+  if (isMaxDecimalLimitReached()) return;
+
   displayText.innerHTML += e.target.innerHTML;
   isEmptyDisplay = false;
+}
+
+function isMaxDecimalLimitReached() {
+  let [operand1, operator, operand2] = destructureDisplayString(true);
+
+  // if operand2 exist
+  if (!isNaN(operand2)) {
+    if (hasMaxDecimalDigits(operand2)) return true;
+  }
+
+  if (operator) return;
+
+  if (hasMaxDecimalDigits(operand1)) return true;
+}
+
+function hasMaxDecimalDigits(operand) {
+  const dotIndex = operand.indexOf(".");
+
+  if (dotIndex === -1) return;
+
+  const decimalPart = operand.slice(dotIndex + 1);
+
+  if (decimalPart.length >= 3) return true;
 }
 
 function showDot() {
@@ -88,7 +113,7 @@ function showDot() {
   }
 
   if (isNaN(operand2) && operator) return;
-  
+
   displayText.innerHTML += ".";
 }
 
