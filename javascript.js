@@ -6,6 +6,7 @@ const clearBtn = document.querySelector(".clear");
 const eraseBtn = document.querySelector(".erase");
 const signBtn = document.querySelector(".sign");
 const equalBtn = document.querySelector(".equal");
+const keyPressSound = document.querySelector('.audio');
 
 const addBtn = document.querySelector(".add");
 const minusBtn = document.querySelector(".minus");
@@ -220,6 +221,9 @@ equalBtn.addEventListener("click", showResult);
 document.addEventListener("keydown", (e) => {
   const regex = /[0-9]/;
   const digit = e.code.match(regex);
+
+  keyPressSound.currentTime = 0;
+  keyPressSound.play();
 
   switch (e.code) {
     case `Digit${digit}`:
