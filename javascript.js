@@ -82,12 +82,16 @@ function showDot() {
 
   // if operand2 exist
   if (!isNaN(operand2)) {
-    if (operand2.includes(".")) return;
+    if (hasDot(operand2)) return;
   } else {
-    if (operand1.includes(".")) return;
+    if (hasDot(operand1)) return;
   }
 
   displayText.innerHTML += ".";
+}
+
+function hasDot(operand) {
+  if (operand.includes(".")) return true;
 }
 
 function showOperator(e) {
