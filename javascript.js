@@ -299,5 +299,11 @@ document.addEventListener("keydown", (e) => {
       eraseBtn.classList.add("active");
       setTimeout(() => eraseBtn.classList.remove("active"), 100);
       break;
+
+    case "ArrowUp":
+    case "ArrowDown":
+      signBtn.click();
+      signBtn.classList.add("active");
+      setTimeout(() => signBtn.classList.remove("active"), 100);
   }
 });
