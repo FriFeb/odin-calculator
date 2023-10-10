@@ -1,3 +1,4 @@
+const allCalculatorButtons = document.querySelector(".buttons");
 const displayText = document.querySelector(".display-text");
 const operatorBtns = document.querySelector(".operators");
 const digitBtns = document.querySelector(".digits");
@@ -6,7 +7,7 @@ const clearBtn = document.querySelector(".clear");
 const eraseBtn = document.querySelector(".erase");
 const signBtn = document.querySelector(".sign");
 const equalBtn = document.querySelector(".equal");
-const keyPressSound = document.querySelector('.audio');
+const keyAudio = document.querySelector(".audio");
 
 const addBtn = document.querySelector(".add");
 const minusBtn = document.querySelector(".minus");
@@ -211,6 +212,12 @@ function changeSign(operand) {
   }
 }
 
+function playKeyAudio() {
+  keyAudio.volume = 0.35;
+  keyAudio.currentTime = 0;
+  keyAudio.play();
+}
+
 digitBtns.addEventListener("click", showDigit);
 operatorBtns.addEventListener("click", showOperator);
 clearBtn.addEventListener("click", clearDisplay);
@@ -218,12 +225,17 @@ eraseBtn.addEventListener("click", eraseSymbol);
 signBtn.addEventListener("click", changeNumberSign);
 equalBtn.addEventListener("click", showResult);
 
+allCalculatorButtons.addEventListener("click", (e) => {
+  if (e.target.tagName !== "BUTTON") return;
+
+  playKeyAudio();
+});
+
 document.addEventListener("keydown", (e) => {
   const regex = /[0-9]/;
   const digit = e.code.match(regex);
 
-  keyPressSound.currentTime = 0;
-  keyPressSound.play();
+  playKeyAudio();
 
   switch (e.code) {
     case `Digit${digit}`:
